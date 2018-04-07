@@ -321,14 +321,14 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1727719652
+  randomSeed: 270818410
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -3660,8 +3660,8 @@ ParticleSystemRenderer:
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
-  m_MinParticleSize: 0.04
-  m_MaxParticleSize: 0.04
+  m_MinParticleSize: 0.02
+  m_MaxParticleSize: 0.02
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
@@ -3883,14 +3883,14 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 512541245
+  randomSeed: 1694430524
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -7222,8 +7222,8 @@ ParticleSystemRenderer:
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
-  m_MinParticleSize: 0.04
-  m_MaxParticleSize: 0.04
+  m_MinParticleSize: 0.02
+  m_MaxParticleSize: 0.02
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
@@ -7704,14 +7704,14 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -904764024
+  randomSeed: 822227807
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -11043,8 +11043,8 @@ ParticleSystemRenderer:
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
-  m_MinParticleSize: 0.04
-  m_MaxParticleSize: 0.04
+  m_MinParticleSize: 0.02
+  m_MaxParticleSize: 0.02
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
@@ -11374,8 +11374,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69d54f36cf9b9f14b86356cb7ef46dc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
-  accelerationTime: 1
+  maxSpeed: 3
+  accelerationTime: 0.5
   rotateDegreesPerSec: 230
   touchAxis: {fileID: 1561306828}
   velDir: {fileID: 550838861}
@@ -11393,7 +11393,7 @@ Transform:
   m_GameObject: {fileID: 1477899033}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.1, z: -0.095957756}
-  m_LocalScale: {x: 0.76000005, y: 0.76000005, z: 0.76000005}
+  m_LocalScale: {x: 0.63178605, y: 0.63178605, z: 0.63178605}
   m_Children:
   - {fileID: 662594644}
   - {fileID: 550838861}
@@ -11512,14 +11512,14 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1936346533
+  randomSeed: -1021305692
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 2.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14851,8 +14851,8 @@ ParticleSystemRenderer:
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
-  m_MinParticleSize: 0.04
-  m_MaxParticleSize: 0.04
+  m_MinParticleSize: 0.02
+  m_MaxParticleSize: 0.02
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
   m_LengthScale: 2
