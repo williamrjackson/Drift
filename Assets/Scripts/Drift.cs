@@ -5,7 +5,6 @@ using UnityEngine;
 public class Drift : MonoBehaviour {
     public float maxSpeed = 5f;
     public float rotateSpeed = 200f;
-    public float recoveryTime = 400f;
     public TouchAxisCtrl touchAxis;
     public TrailRenderer[] trails;
 
