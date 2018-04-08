@@ -7,13 +7,16 @@ public class Drift : MonoBehaviour {
     public float accelerationTime = 1f;
     public float rotateDegreesPerSec = 180f;
     public TouchAxisCtrl touchAxis;
-    public float particleDistance = .1f;
-    public ParticleSystem[] particles;
+    public float trackSegLength = .1f;
+    public int traceSegCount = 20;
+    public Transform[] wheels;
+    public Material trailMaterial;
 
     Rigidbody2D m_RigidBody;
     private Transform m_VelDir;
     float m_AppliedSpeed = 0;
-    Vector3 m_LastParticlePos;
+    private List<WheelTrack> m_WheelTracks;
+    private Vector3 m_LastPos;
 
     void Start()
     {
@@ -24,8 +27,16 @@ public class Drift : MonoBehaviour {
         m_VelDir.parent = transform;
         m_VelDir.localPosition = Vector3.zero;
         m_VelDir.localEulerAngles = Vector3.zero;
+        m_LastPos = transform.position;
+        m_WheelTracks = new List<WheelTrack>();
+        for (int i = 0; i < wheels.Length; i++)
+        {
+            WheelTrack wheel = new WheelTrack();
+            wheel.Init();
+            wheel.transform = wheels[i];
+            m_WheelTracks.Add(wheel);
+        }
 
-        m_LastParticlePos = transform.position;
     }
     void Update()
     {
@@ -61,16 +72,15 @@ public class Drift : MonoBehaviour {
         m_VelDir.localEulerAngles = new Vector3(0, 0, Mathf.LerpAngle(m_VelDir.localEulerAngles.z, touchAxis.GetAxis("Horizontal") * 90f, Time.deltaTime));
 
         // Manage the transparency of particles. 
-        if (Vector3.Distance(transform.position, m_LastParticlePos) > particleDistance)
+        if (Vector3.Distance(transform.position, m_LastPos) > trackSegLength)
         {
-            m_LastParticlePos = transform.position;
+            m_LastPos = transform.position;
+
             Color newAlpha = Color.black;
-            newAlpha.a = Mathf.Abs(angleOffset);
-            var emitParams = new ParticleSystem.EmitParams();
-            emitParams.startColor = newAlpha;
-            foreach (ParticleSystem p in particles)
+            newAlpha.a = Mathf.Min(Mathf.Abs(angleOffset), .5f);
+            foreach (WheelTrack wheel in m_WheelTracks)
             {
-                p.Emit(emitParams, 1);
+                wheel.AddLine(trailMaterial, newAlpha, traceSegCount);
             }
         }
     }
@@ -85,5 +95,41 @@ public class Drift : MonoBehaviour {
     float Remap(float val, float srcMin, float srcMax, float destMin, float destMax)
     {
         return Mathf.Lerp(destMin, destMax, Mathf.InverseLerp(srcMin, srcMax, val));
+    }
+
+    private class WheelTrack
+    {
+        public Vector3 lastPos;
+        public List<Transform> lines;
+        public Transform transform;
+        private Transform lineHolder;
+        private int lineIndex = 0;
+        
+        public void Init()
+        {
+            lines = new List<Transform>();
+            lineHolder = new GameObject("TireTracks").transform;
+        }
+        public void AddLine(Material mat, Color color, int segCount)
+        {
+            if (lines.Count < segCount)
+            {
+                GameObject go = new GameObject();
+                go.transform.parent = lineHolder;
+                go.AddComponent<LineRenderer>();
+                lines.Add(go.transform);
+            }
+
+            LineRenderer line = lines[lineIndex].GetComponent<LineRenderer>();
+            line.material = mat;
+            line.startWidth = line.endWidth = .05f;
+            line.positionCount = 2;
+            line.SetPosition(0, transform.position);
+            line.SetPosition(1, lastPos);
+            line.startColor = line.endColor = color;
+
+            lastPos = transform.position;
+            lineIndex = (lineIndex + 1) % segCount;
+        }
     }
 }
