@@ -11,12 +11,15 @@ public class TrackPegDrift : MonoBehaviour {
     private Transform m_Captured;
     private float m_InAngle;
     private Image m_Radial;
-
+    private Vector3 m_InitRadialScale;
 	// Use this for initialization
 	void Start () {
         m_Radial = RadialImageCanvas.GetComponentInChildren<Image>();
+        m_InitRadialScale = RadialImageCanvas.transform.localScale;
 	}
-	
+
+    bool m_bJustTriggered;
+    bool m_Clockwise;
 	// Update is called once per frame
 	void Update () {
 		if (m_bIsTriggered)
@@ -24,16 +27,54 @@ public class TrackPegDrift : MonoBehaviour {
             Vector3 dirBetween = m_Captured.transform.position - transform.position;
             float angle = EnsurePositiveAngle(Mathf.Atan2(dirBetween.y, dirBetween.x) * Mathf.Rad2Deg);
             float deltaAngle = Mathf.DeltaAngle(m_InAngle, angle);
-            float val = Remap(EnsurePositiveAngle(deltaAngle), 0, 360, 1, 0);
+            if (m_bJustTriggered && deltaAngle != 0)
+            {
+                m_bJustTriggered = false;
+                if (deltaAngle > 0)
+                {
+                    m_Radial.fillClockwise = false;
+                    m_Clockwise = false;
+                }
+                else
+                {
+                    m_Radial.fillClockwise = true;
+                    m_Clockwise = true;
+                }
+            }
+
+            float val;
+            if (m_Clockwise)
+            {
+                val = Remap(EnsurePositiveAngle(deltaAngle), 0, 360, 1, 0);
+            }
+            else
+            {
+                val = Remap(EnsurePositiveAngle(deltaAngle), 360, 0, 1, 0);
+            }
+            if (val > .95f)
+            {
+                print("Done!");
+                m_bIsTriggered = false;
+                RadialImageCanvas.transform.localScale = Vector3.zero;
+            }
+            if (val < m_LastVal)
+            {
+                m_bJustTriggered = true;
+            }
+            m_LastVal = val;
             m_Radial.fillAmount = val;
         }
     }
 
+    float m_LastVal;
     void OnTriggerEnter2D(Collider2D other)
     {
+        m_LastVal = 0;
         m_bIsTriggered = true;
+        m_bJustTriggered = true;
         m_Captured = other.transform;
         RadialImageCanvas.transform.position = transform.position;
+        RadialImageCanvas.transform.localScale = m_InitRadialScale;
         Vector3 vectorTo = other.transform.position - transform.position;
         float angle = EnsurePositiveAngle(Mathf.Atan2(vectorTo.y, vectorTo.x) * Mathf.Rad2Deg);
         m_InAngle = angle;

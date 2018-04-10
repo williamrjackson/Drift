@@ -8,7 +8,7 @@ public class Drift : MonoBehaviour {
     public float rotateDegreesPerSec = 180f;
     public TouchAxisCtrl touchAxis;
     public float trackSegLength = .15f;
-    public int traceSegCount = 100;
+    public int trackSegCount = 100;
     public Transform[] wheels;
     public Material trailMaterial;
 
@@ -32,7 +32,7 @@ public class Drift : MonoBehaviour {
         for (int i = 0; i < wheels.Length; i++)
         {
             WheelTrack wheel = new WheelTrack();
-            wheel.Init(wheels[i], trailMaterial, traceSegCount);
+            wheel.Init(wheels[i], trailMaterial, trackSegCount);
             m_WheelTracks.Add(wheel);
         }
 
