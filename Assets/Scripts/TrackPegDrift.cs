@@ -6,20 +6,22 @@ using UnityEngine.UI;
 public class TrackPegDrift : MonoBehaviour {
 
     public Canvas RadialImageCanvas;
-
+    public ParticleSystem particleCelebration;
     private bool m_bIsTriggered;
     private Transform m_Captured;
     private float m_InAngle;
     private Image m_Radial;
     private Vector3 m_InitRadialScale;
+    bool m_bJustTriggered;
+    bool m_Clockwise;
+    float m_LastVal;
+
 	// Use this for initialization
 	void Start () {
         m_Radial = RadialImageCanvas.GetComponentInChildren<Image>();
         m_InitRadialScale = RadialImageCanvas.transform.localScale;
 	}
 
-    bool m_bJustTriggered;
-    bool m_Clockwise;
 	// Update is called once per frame
 	void Update () {
 		if (m_bIsTriggered)
@@ -51,22 +53,30 @@ public class TrackPegDrift : MonoBehaviour {
             {
                 val = Remap(EnsurePositiveAngle(deltaAngle), 360, 0, 1, 0);
             }
+
+            // Detect either success or reversal
             if (val > .95f)
             {
-                print("Done!");
-                m_bIsTriggered = false;
-                RadialImageCanvas.transform.localScale = Vector3.zero;
+                if (val - m_LastVal < .5f)
+                {
+                    m_bIsTriggered = false;
+                    RadialImageCanvas.transform.localScale = Vector3.zero;
+                    particleCelebration.Play();
+                }
+                else
+                {
+                    m_Radial.fillAmount = 0;
+                    m_bJustTriggered = true;
+                }
             }
-            if (val < m_LastVal)
+            else
             {
-                m_bJustTriggered = true;
+                m_Radial.fillAmount = val;
+                m_LastVal = val;
             }
-            m_LastVal = val;
-            m_Radial.fillAmount = val;
         }
     }
 
-    float m_LastVal;
     void OnTriggerEnter2D(Collider2D other)
     {
         m_LastVal = 0;
@@ -95,4 +105,5 @@ public class TrackPegDrift : MonoBehaviour {
         if (inputAngle < 0) { inputAngle += 360; }
         return inputAngle;
     }
+
 }
