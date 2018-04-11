@@ -848,6 +848,11 @@ Prefab:
       propertyPath: touchAxis
       value: 
       objectReference: {fileID: 1561306828}
+    - target: {fileID: 114586914066387858, guid: 545816ba7c4181a449771b82b3b2f0b2,
+        type: 2}
+      propertyPath: maxSpeed
+      value: 4.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 545816ba7c4181a449771b82b3b2f0b2, type: 2}
   m_IsPrefabParent: 0
