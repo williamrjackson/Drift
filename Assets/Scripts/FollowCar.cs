@@ -5,6 +5,8 @@ using UnityEngine;
 public class FollowCar : MonoBehaviour {
 	public Transform car;
 	public float smoothTime = 0.3F;
+    public bool vertical = true;
+    public bool horizontal = true;
 
 	private Vector3 offset;
 	private Vector3 velocity = Vector3.zero;
@@ -16,8 +18,24 @@ public class FollowCar : MonoBehaviour {
 	}
 
 	void LateUpdate () {
-		
-		Vector3 targetPosition = car.position + offset;
+        Vector3 carByAxis = new Vector3();
+        if (horizontal)
+        {
+            carByAxis.x = car.position.x;
+        }
+        else
+        {
+            carByAxis.x = transform.position.x - offset.x;
+        }
+        if (vertical)
+        {
+            carByAxis.y = car.position.y;
+        }
+        else
+        {
+            carByAxis.y = transform.position.y - offset.y;
+        }
+        Vector3 targetPosition = new Vector3(carByAxis.x + offset.x, carByAxis.y + offset.y, carByAxis.z + offset.z);
 		transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
 
 	}

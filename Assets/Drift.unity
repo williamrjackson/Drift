@@ -1106,6 +1106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   car: {fileID: 1477899035}
   smoothTime: 0.3
+  vertical: 1
+  horizontal: 0
 --- !u!4 &1477899035 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4604166119179330, guid: 545816ba7c4181a449771b82b3b2f0b2,
